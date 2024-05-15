@@ -14,53 +14,44 @@ import { useLocation } from 'react-router-dom';
 import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import './Menu.css';
 
-interface AppPage {
+interface userList {
   url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
+  userProfilePicture: string | undefined;
+  username: string;
 }
 
-const appPages: AppPage[] = [
+const userLists: userList[] = [
   {
-    title: 'Inbox',
-    url: '/folder/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    username: 'Anne',
+    url: '/chat/anne',
+    userProfilePicture: undefined
   },
   {
-    title: 'Outbox',
-    url: '/folder/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    username: 'Momo',
+    url: '/chat/momo',
+    userProfilePicture: undefined
   },
   {
-    title: 'Favorites',
-    url: '/folder/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
+    username: 'Rylan',
+    url: '/chat/rylan',
+    userProfilePicture: undefined
   },
   {
-    title: 'Archived',
-    url: '/folder/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
+    username: 'fred',
+    url: '/chat/fred',
+    userProfilePicture: undefined
   },
   {
-    title: 'Trash',
-    url: '/folder/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
+    username: 'Andrew',
+    url: '/chat/andrew',
+    userProfilePicture: undefined
   },
   {
-    title: 'Spam',
-    url: '/folder/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
+    username: 'Jeff',
+    url: '/chat/jeff',
+    userProfilePicture: undefined
   }
 ];
-
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
 const Menu: React.FC = () => {
   const location = useLocation();
@@ -69,28 +60,31 @@ const Menu: React.FC = () => {
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
-          {appPages.map((appPage, index) => {
+          <IonListHeader>Messages</IonListHeader>
+          <IonNote>username</IonNote>
+          {userLists.map((userList, index) => {
             return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                  <IonIcon aria-hidden="true" slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
-                  <IonLabel>{appPage.title}</IonLabel>
+              <IonMenuToggle
+                key={index}
+                autoHide={false}>
+                <IonItem
+                  className={location.pathname === userList.url ? 'selected' : ''}
+                  routerLink={userList.url}
+                  routerDirection="none"
+                  lines="none"
+                  detail={false}>
+                  <img
+                    className='userListProfileImage'
+                    aria-hidden="true"
+                    slot="start"
+                    src={userList.userProfilePicture ? userList.userProfilePicture : './public/nouser.webp'} />
+                  <IonLabel>
+                    {userList.username}
+                  </IonLabel>
                 </IonItem>
               </IonMenuToggle>
             );
           })}
-        </IonList>
-
-        <IonList id="labels-list">
-          <IonListHeader>Labels</IonListHeader>
-          {labels.map((label, index) => (
-            <IonItem lines="none" key={index}>
-              <IonIcon aria-hidden="true" slot="start" icon={bookmarkOutline} />
-              <IonLabel>{label}</IonLabel>
-            </IonItem>
-          ))}
         </IonList>
       </IonContent>
     </IonMenu>
