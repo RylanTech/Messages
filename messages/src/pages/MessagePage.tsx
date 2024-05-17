@@ -1,9 +1,9 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonSkeletonText, IonTitle, IonToolbar } from '@ionic/react';
 import { useParams } from 'react-router';
-import './Page.css';
-import MesssagePage from '../components/messagesPage';
+import './MessagePage.css';
+import SelectedMessages from '../components/SelectedMessages';
 
-const Page: React.FC = () => {
+const MessagePage: React.FC = () => {
 
   const { name } = useParams<{ name: string; }>();
 
@@ -46,10 +46,10 @@ const Page: React.FC = () => {
             <IonTitle size="large">{name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <MesssagePage messages={messages} />
+        <SelectedMessages messages={messages} />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Page;
+export default MessagePage;

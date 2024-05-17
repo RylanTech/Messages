@@ -2,7 +2,7 @@ import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/r
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
-import Page from './pages/Page';
+import MesssagePage from './pages/MessagePage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -33,6 +33,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import LoginPage from './pages/LoginPage';
+
 
 setupIonicReact();
 
@@ -47,7 +49,10 @@ const App: React.FC = () => {
               <Redirect to="/chat/rylan" />
             </Route>
             <Route path="/chat/:name" exact={true}>
-              <Page />
+              <MesssagePage />
+            </Route>
+            <Route path="/login" exact={true}>
+              <LoginPage/>
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

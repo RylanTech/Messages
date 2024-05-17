@@ -1,5 +1,5 @@
 import { IonCol, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonRow } from '@ionic/react';
-import './messagesPage.css';
+import './SelectedMessages.css';
 
 interface ContainerProps {
   messages: MessageContent[]
@@ -13,7 +13,7 @@ interface MessageContent {
 
 let currentUser = 'currentUser'
 
-const MesssagePage: React.FC<ContainerProps> = ({ messages }) => {
+const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
 
   function returingMessages() {
     console.log(messages)
@@ -74,4 +74,4 @@ const MesssagePage: React.FC<ContainerProps> = ({ messages }) => {
   );
 };
 
-export default MesssagePage;
+export default SelectedMessages;
