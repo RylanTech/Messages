@@ -51,11 +51,11 @@ const App: React.FC = () => {
             <Route path="/chat/:name" exact={true}>
               <MesssagePage />
             </Route>
-            <Route path="/login" exact={true}>
-              <LoginPage/>
-            </Route>
           </IonRouterOutlet>
         </IonSplitPane>
+        <Route path="/login" exact={true}>
+          <LoginPage />
+        </Route>
       </IonReactRouter>
     </IonApp>
   );

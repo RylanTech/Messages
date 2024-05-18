@@ -66,22 +66,33 @@ const loginUser = async (req, res, next) => {
                 // If passwords match, create a JWT
                 if (passwordsMatch) {
                     let token = await (0, authService_1.signUserToken)(existingUser);
-                    res.status(200).json(token);
+                    res.status(200).json({
+                        token: token,
+                        login: true
+                    });
                 }
                 else {
-                    res.status(203).json('Invalid password');
+                    res.status(203).json({
+                        login: false
+                    });
                 }
             }
             else {
-                res.status(203).json('Invalid username');
+                res.status(203).json({
+                    login: false
+                });
             }
         }
         else {
-            res.status(401).send("Login failer");
+            res.status(401).json({
+                login: false
+            });
         }
     }
     catch {
-        res.status(500).send();
+        res.status(500).json({
+            login: false
+        });
     }
 };
 exports.loginUser = loginUser;

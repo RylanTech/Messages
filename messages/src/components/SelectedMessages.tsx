@@ -1,5 +1,6 @@
-import { IonCol, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonRow } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonInput, IonPage, IonRow } from '@ionic/react';
 import './SelectedMessages.css';
+import { useState, useEffect, useRef } from 'react';
 
 interface ContainerProps {
   messages: MessageContent[]
@@ -11,55 +12,49 @@ interface MessageContent {
   color: string
 }
 
-let currentUser = 'currentUser'
+let currentUser = 'currentUser';
 
 const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
+  const [messageText, setMessageText] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  function returingMessages() {
-    console.log(messages)
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  function returningMessages() {
     if (messages) {
-      return messages.map((msg) => {
-        if (msg.username === 'currentUser') {
+      return messages.map((msg, index) => {
+        if (msg.username === currentUser) {
           return (
-            <IonRow>
-              <IonCol size='2'>
-
-              </IonCol>
+            <IonRow key={index}>
+              <IonCol size='2'></IonCol>
               <IonCol size='10'>
                 <div
                   className='messageFromLoggedInUser'
-                  style={{
-                    backgroundColor: msg.color
-                  }}>
+                  style={{ backgroundColor: msg.color }}>
                   {msg.message}
                 </div>
-                <div 
-                className='messageBottemLoggedInUser'
-                style={{
-                  backgroundColor: msg.color
-                }}/>
+                <div className='messageBottemLoggedInUser' style={{ backgroundColor: msg.color }} />
               </IonCol>
             </IonRow>
           )
         } else {
           return (
-            <IonRow>
+            <IonRow key={index}>
               <IonCol size='10'>
                 <div
                   className='messageFromUser'
-                  style={{
-                    backgroundColor: msg.color
-                  }}>
+                  style={{ backgroundColor: msg.color }}>
                   {msg.message}
                 </div>
-                <div className='messageBottemUser'
-                style={{
-                  backgroundColor: msg.color
-                }}/>
+                <div className='messageBottemUser' style={{ backgroundColor: msg.color }} />
               </IonCol>
-              <IonCol size='2'>
-
-              </IonCol>
+              <IonCol size='2'></IonCol>
             </IonRow>
           )
         }
@@ -68,9 +63,24 @@ const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
   }
 
   return (
-    <div id="container">
-      {returingMessages()}
-    </div>
+    <IonPage>
+      <IonContent>
+        <div id="container">
+          {returningMessages()}
+          <div ref={messagesEndRef}></div>
+        </div>
+      </IonContent>
+      <IonFooter className="ion-no-border">
+        <div className="input-container">
+          <IonInput
+            value={messageText}
+            placeholder="Type a message"
+            onIonChange={e => setMessageText(e.detail.value!)}
+            clearInput
+          />
+        </div>
+      </IonFooter>
+    </IonPage>
   );
 };
 
