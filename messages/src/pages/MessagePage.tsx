@@ -2,10 +2,14 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonSkeletonT
 import { useParams } from 'react-router';
 import './MessagePage.css';
 import SelectedMessages from '../components/SelectedMessages';
+import { useContext, useState } from 'react';
+import { UserContext } from '../contexts/userContext';
 
 const MessagePage: React.FC = () => {
 
   const { name } = useParams<{ name: string; }>();
+
+  const {primaryColor} = useContext(UserContext)
 
   const messages = [
     {
@@ -16,7 +20,7 @@ const MessagePage: React.FC = () => {
     {
       username: 'currentUser',
       message: 'testing complete',
-      color: "#A0BFE9"
+      color: primaryColor
     }
 
   ]
@@ -42,7 +46,7 @@ const MessagePage: React.FC = () => {
 
       <IonContent fullscreen>
         <IonHeader collapse="condense">
-          <IonToolbar>
+          <IonToolbar className='messageToolBar'>
             <IonTitle size="large">{name}</IonTitle>
           </IonToolbar>
         </IonHeader>

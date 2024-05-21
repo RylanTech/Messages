@@ -34,6 +34,9 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import LoginPage from './pages/LoginPage';
+import SettingsPage from './pages/Settings';
+import { useContext, useState } from 'react';
+import { UserContext } from './contexts/userContext';
 
 
 setupIonicReact();
@@ -50,6 +53,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/chat/:name" exact={true}>
               <MesssagePage />
+            </Route>
+            <Route path="/settings" exact={true}>
+              <SettingsPage/>
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

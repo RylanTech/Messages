@@ -1,5 +1,7 @@
 import {
+  IonCol,
   IonContent,
+  IonFooter,
   IonIcon,
   IonItem,
   IonLabel,
@@ -8,12 +10,15 @@ import {
   IonMenu,
   IonMenuToggle,
   IonNote,
+  IonRow,
+  useIonViewWillEnter,
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { settingsOutline, archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import './Menu.css';
-
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../contexts/userContext';
 interface userList {
   url: string;
   userProfilePicture: string | undefined;
@@ -54,6 +59,46 @@ const userLists: userList[] = [
 ];
 
 const Menu: React.FC = () => {
+
+  const {setPrimaryColor} = useContext(UserContext)
+
+  useEffect(() => {
+    let selectedColor = localStorage.getItem("primary-color")
+
+    console.log(selectedColor)
+    if (selectedColor) {
+      function hexToRgb(hex: string) {
+        // Remove the leading # if it exists
+        hex = hex.replace(/^#/, '');
+
+        // Check for 3-digit hex and convert to 6-digit hex
+        if (hex.length === 3) {
+          hex = hex.split('').map(char => char + char).join('');
+        }
+
+        // Parse the hex string into its RGB components
+        const bigint = parseInt(hex, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+
+        return { r, g, b };
+      }
+      // Convert selected color to RGB
+      const { r, g, b } = hexToRgb(selectedColor);
+      const colorRgb = `${r}, ${g}, ${b}`;
+      const colorHex = `${selectedColor}`;
+
+      // Update CSS variables
+      document.documentElement.style.setProperty('--ion-color-primary', colorHex);
+      document.documentElement.style.setProperty('--ion-color-primary-rgb', colorRgb);
+
+      setPrimaryColor(selectedColor)
+    }
+
+
+  });
+
   const location = useLocation();
 
   return (
@@ -72,7 +117,8 @@ const Menu: React.FC = () => {
                   routerLink={userList.url}
                   routerDirection="none"
                   lines="none"
-                  detail={false}>
+                  detail={false}
+                >
                   <img
                     className='userListProfileImage'
                     aria-hidden="true"
@@ -87,6 +133,28 @@ const Menu: React.FC = () => {
           })}
         </IonList>
       </IonContent>
+      <IonFooter>
+        {/* <IonMenuToggle> */}
+        <IonItem
+          className={location.pathname === '/settings' ? 'selected' : ''}
+          routerLink={'/settings'}
+          routerDirection="none"
+          lines="none"
+          detail={false}>
+          <IonRow>
+            <IonCol size='2'>
+              <IonIcon
+                className='settingsMenuButtonIcon'
+                icon={settingsOutline} />
+            </IonCol>
+            <IonCol size='10'
+              className='settingsMenuButtonText'>
+              Settings
+            </IonCol>
+          </IonRow>
+        </IonItem>
+        {/* </IonMenuToggle> */}
+      </IonFooter>
     </IonMenu>
   );
 };

@@ -1,0 +1,36 @@
+.colorSelect {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+}
+
+.colorSelect0054E9 {
+    background-color: #0054E9;
+}
+
+.colorSelectE6DF19 {
+    background-color: #E6DF19;
+}
+
+.colorSelect57CD32 {
+    background-color: #57CD32;
+}
+
+.colorSelectE21D34 {
+    background-color: #E21D34;
+}
+
+.colorSelectParent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.colorSelected {
+    width: 50px;
+    height: 50px;
+}
+
+.colorSelect:hover {
+    cursor: pointer;
+}

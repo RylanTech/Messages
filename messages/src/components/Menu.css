@@ -115,3 +115,15 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 } 
+
+
+
+.settingsMenuButtonIcon {
+  width: 100%;
+  display: inline;
+  margin: auto;
+}
+
+.settingsMenuButtonText {
+  margin: auto;
+}

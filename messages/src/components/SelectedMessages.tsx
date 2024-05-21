@@ -1,4 +1,4 @@
-import { IonCol, IonContent, IonFooter, IonInput, IonPage, IonRow } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonFooter, IonInput, IonPage, IonRow } from '@ionic/react';
 import './SelectedMessages.css';
 import { useState, useEffect, useRef } from 'react';
 
@@ -16,15 +16,6 @@ let currentUser = 'currentUser';
 
 const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
   const [messageText, setMessageText] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   function returningMessages() {
     if (messages) {
@@ -32,10 +23,10 @@ const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
         if (msg.username === currentUser) {
           return (
             <IonRow key={index}>
-              <IonCol size='2'></IonCol>
+              <IonCol size='2' />
               <IonCol size='10'>
                 <div
-                  className='messageFromLoggedInUser'
+                  className='messageFromLoggedInUser message'
                   style={{ backgroundColor: msg.color }}>
                   {msg.message}
                 </div>
@@ -48,7 +39,7 @@ const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
             <IonRow key={index}>
               <IonCol size='10'>
                 <div
-                  className='messageFromUser'
+                  className='messageFromUser message'
                   style={{ backgroundColor: msg.color }}>
                   {msg.message}
                 </div>
@@ -64,22 +55,30 @@ const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
 
   return (
     <IonPage>
-      <IonContent>
-        <div id="container">
-          {returningMessages()}
-          <div ref={messagesEndRef}></div>
-        </div>
-      </IonContent>
-      <IonFooter className="ion-no-border">
-        <div className="input-container">
-          <IonInput
-            value={messageText}
-            placeholder="Type a message"
-            onIonChange={e => setMessageText(e.detail.value!)}
-            clearInput
-          />
-        </div>
-      </IonFooter>
+        <IonContent>
+          <div className="message-container">
+            {returningMessages()}
+          </div>
+        </IonContent>
+        <IonFooter className="ion-no-border">
+          <IonRow>
+            <IonCol size='10'>
+              <div className="input-container">
+                <IonInput
+                  value={messageText}
+                  placeholder="Type a message"
+                  onIonChange={e => setMessageText(e.detail.value!)}
+                  clearInput
+                />
+              </div>
+            </IonCol>
+            <IonCol size='2'>
+              <IonButton className='sendButton'>
+                Send
+              </IonButton>
+            </IonCol>
+          </IonRow>
+        </IonFooter>
     </IonPage>
   );
 };

@@ -65,8 +65,7 @@
 .messageFromUser,
 .messageFromLoggedInUser {
   padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .messageBottemUser,
@@ -75,30 +74,23 @@
 }
 
 .messageFromUser {
-  background-color: #e1ffc7; /* Example color */
   align-self: flex-start;
 }
 
 .messageFromLoggedInUser {
-  background-color: #c7e1ff; /* Example color */
   align-self: flex-end;
 }
 
-.ion-page {
-  display: flex;
-  flex-direction: column;
-}
-
-.ion-content {
-  flex-grow: 1;
-}
-
-.ion-footer {
-  flex-shrink: 0;
-  padding: 10px;
-}
-
 .input-container {
-  display: flex;
+  padding: 5px;
+}
+
+.sendButton {
   width: 100%;
+  border-radius: 25px!important;
+}
+
+
+.message-container {
+  margin-top: 60px;
 }
