@@ -94,3 +94,7 @@
 .message-container {
   margin-top: 60px;
 }
+
+.keyboardWillShow {
+  background-color: aqua;
+}

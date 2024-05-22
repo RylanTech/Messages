@@ -37,11 +37,18 @@ import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/Settings';
 import { useContext, useState } from 'react';
 import { UserContext } from './contexts/userContext';
+import { registerPlugin } from '@capacitor/core';
+import { Keyboard } from '@capacitor/keyboard';
+
+const keyboard = registerPlugin('Keyboard', {
+  web: () => import('@capacitor/keyboard').then(m => m.Keyboard),
+});
 
 
 setupIonicReact();
 
 const App: React.FC = () => {
+  
   return (
     <IonApp>
       <IonReactRouter>

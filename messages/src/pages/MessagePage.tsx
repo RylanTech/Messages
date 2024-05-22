@@ -21,6 +21,11 @@ const MessagePage: React.FC = () => {
       username: 'currentUser',
       message: 'testing complete',
       color: primaryColor
+    },
+    {
+      username: "Anne",
+      message: "testing message",
+      color: "#33CC4E"
     }
 
   ]

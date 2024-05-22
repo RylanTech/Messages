@@ -1,6 +1,7 @@
 import { IonButton, IonCol, IonContent, IonFooter, IonInput, IonPage, IonRow } from '@ionic/react';
 import './SelectedMessages.css';
 import { useState, useEffect, useRef } from 'react';
+import { Keyboard } from '@capacitor/keyboard';
 
 interface ContainerProps {
   messages: MessageContent[]
@@ -16,6 +17,41 @@ let currentUser = 'currentUser';
 
 const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
   const [messageText, setMessageText] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  // const [setConfMessage, setConfMessage] = useState("test")
+
+  function scrollToBottom() {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    const setupKeyboardListeners = async () => {
+      const showListener = await Keyboard.addListener('keyboardWillShow', (info) => {
+        // setConfMessage("testingc")
+        setKeyboardHeight(info.keyboardHeight);
+      });
+
+      const hideListener = await Keyboard.addListener('keyboardWillHide', () => {
+        setKeyboardHeight(0);
+      });
+
+      return () => {
+        showListener.remove();
+        hideListener.remove();
+      };
+    };
+
+    const cleanup = setupKeyboardListeners();
+
+    return () => {
+      cleanup.then(fn => fn());
+    };
+  }, []);
 
   function returningMessages() {
     if (messages) {
@@ -55,30 +91,31 @@ const SelectedMessages: React.FC<ContainerProps> = ({ messages }) => {
 
   return (
     <IonPage>
-        <IonContent>
-          <div className="message-container">
-            {returningMessages()}
-          </div>
-        </IonContent>
-        <IonFooter className="ion-no-border">
-          <IonRow>
-            <IonCol size='10'>
-              <div className="input-container">
-                <IonInput
-                  value={messageText}
-                  placeholder="Type a message"
-                  onIonChange={e => setMessageText(e.detail.value!)}
-                  clearInput
-                />
-              </div>
-            </IonCol>
-            <IonCol size='2'>
-              <IonButton className='sendButton'>
-                Send
-              </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonFooter>
+      <IonContent style={{ marginBottom: keyboardHeight }}>
+        <div className="message-container">
+          {returningMessages()}
+          <div ref={messagesEndRef} />
+        </div>
+      </IonContent>
+      <IonFooter className="ion-no-border" style={{ marginBottom: keyboardHeight }}>
+        <IonRow>
+          <IonCol size='10'>
+            <div className="input-container">
+              <IonInput
+                value={messageText}
+                placeholder="Type a message"
+                onIonChange={e => setMessageText(e.detail.value!)}
+                clearInput
+              />
+            </div>
+          </IonCol>
+          <IonCol size='2'>
+            <IonButton className='sendButton'>
+              Send
+            </IonButton>
+          </IonCol>
+        </IonRow>
+      </IonFooter>
     </IonPage>
   );
 };

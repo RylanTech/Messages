@@ -11,11 +11,10 @@ import {
   IonMenuToggle,
   IonNote,
   IonRow,
-  useIonViewWillEnter,
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { settingsOutline, archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { settingsOutline } from 'ionicons/icons';
 import './Menu.css';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/userContext';
